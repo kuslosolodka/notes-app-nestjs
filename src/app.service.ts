@@ -1,56 +1,70 @@
-import { Injectable } from '@nestjs/common'
-import { PrismaService } from './prisma.service'
-import { Note, Prisma } from '@prisma/client'
+import { Injectable, Logger, NotFoundException } from '@nestjs/common'
+
+import { AppRepository } from './app.repository'
+import type {
+  NoteCreateRequestDto,
+  NoteCreateResponseDto,
+  NoteDeleteResponseDto,
+  NoteGetAllItemsResponseDto,
+  NoteGetOneItemRequestDto,
+  NoteGetOneItemResponseDto,
+  NoteUpdateRequestDto,
+  NoteUpdateResponseDto,
+} from './types/dtos/dtos'
+import { mapToDto } from './helpers/map-to-dto/map-to-dto.helper'
 
 @Injectable()
-export class AppService {
-  constructor(private prisma: PrismaService) {}
+class AppService {
+  constructor(
+    private readonly appRepository: AppRepository,
+    private readonly logger: Logger
+  ) {}
 
   async findNote(
-    noteWhereUniqueInput: Prisma.NoteWhereUniqueInput
-  ): Promise<Note | null> {
-    return this.prisma.note.findUnique({
-      where: noteWhereUniqueInput,
-    })
+    NoteWhereUniqueInput: NoteGetOneItemRequestDto
+  ): Promise<NoteGetOneItemResponseDto | null> {
+    const note = await this.appRepository.find(NoteWhereUniqueInput)
+    if (note) {
+      this.logger.log(`Found note with ID ${note.id}`, { note })
+      return mapToDto(note)
+    }
+    throw new NotFoundException('Note not found')
   }
 
-  async findNotes(params: {
-    skip?: number
-    take?: number
-    cursor?: Prisma.NoteWhereUniqueInput
-    where?: Prisma.NoteWhereInput
-    orderBy?: Prisma.NoteOrderByWithRelationInput
-  }): Promise<Note[]> {
-    const { skip, take, cursor, where, orderBy } = params
-    return this.prisma.note.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
-    })
+  async findNotes(): Promise<NoteGetAllItemsResponseDto[]> {
+    const notes = await this.appRepository.findAll({})
+    this.logger.log(`Retrieved ${notes.length} notes`, { notes })
+    return notes.map((note) => mapToDto(note))
   }
 
-  async createNote(data: Prisma.NoteCreateInput): Promise<Note> {
-    return this.prisma.note.create({
-      data,
+  async createNote(data: NoteCreateRequestDto): Promise<NoteCreateResponseDto> {
+    const createdNote = await this.appRepository.create(data)
+    this.logger.log(`Created note with ID ${createdNote.id}`, {
+      createdNote,
     })
+    return mapToDto(createdNote)
   }
 
-  async updateNote(params: {
-    where: Prisma.NoteWhereUniqueInput
-    data: Prisma.NoteUpdateInput
-  }): Promise<Note> {
-    const { where, data } = params
-    return this.prisma.note.update({
-      data,
-      where,
+  async updateNote(parameters: {
+    data: NoteUpdateRequestDto
+    where: NoteGetOneItemRequestDto
+  }): Promise<NoteUpdateResponseDto> {
+    const updatedNote = await this.appRepository.update(parameters)
+    this.logger.log(`Updated note with ID ${updatedNote.id}`, {
+      updatedNote,
     })
+    return mapToDto(updatedNote)
   }
 
-  async deleteNote(where: Prisma.NoteWhereUniqueInput): Promise<Note> {
-    return this.prisma.note.delete({
-      where,
+  async deleteNote(
+    where: NoteGetOneItemRequestDto
+  ): Promise<NoteDeleteResponseDto> {
+    const deletedNote = await this.appRepository.delete(where)
+    this.logger.log(`Deleted note with ID ${deletedNote.id}`, {
+      deletedNote,
     })
+    return mapToDto(deletedNote)
   }
 }
+
+export { AppService }
