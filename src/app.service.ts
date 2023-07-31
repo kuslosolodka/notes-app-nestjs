@@ -25,7 +25,7 @@ class AppService {
   ): Promise<NoteGetOneItemResponseDto | null> {
     const note = await this.appRepository.find(NoteWhereUniqueInput)
     if (note) {
-      this.logger.log(`Found Note with ID ${note.id}`, { note })
+      this.logger.log(`Found note with ID ${note.id}`, { note })
       return mapToDto(note)
     }
     throw new NotFoundException('Note not found')
@@ -33,13 +33,13 @@ class AppService {
 
   async findNotes(): Promise<NoteGetAllItemsResponseDto[]> {
     const notes = await this.appRepository.findAll({})
-    this.logger.log(`Retrieved ${notes.length} Notes`, { notes })
+    this.logger.log(`Retrieved ${notes.length} notes`, { notes })
     return notes.map((note) => mapToDto(note))
   }
 
   async createNote(data: NoteCreateRequestDto): Promise<NoteCreateResponseDto> {
     const createdNote = await this.appRepository.create(data)
-    this.logger.log(`Created Note with ID ${createdNote.id}`, {
+    this.logger.log(`Created note with ID ${createdNote.id}`, {
       createdNote,
     })
     return mapToDto(createdNote)
@@ -50,7 +50,7 @@ class AppService {
     where: NoteGetOneItemRequestDto
   }): Promise<NoteUpdateResponseDto> {
     const updatedNote = await this.appRepository.update(parameters)
-    this.logger.log(`Updated Note with ID ${updatedNote.id}`, {
+    this.logger.log(`Updated note with ID ${updatedNote.id}`, {
       updatedNote,
     })
     return mapToDto(updatedNote)
@@ -60,7 +60,7 @@ class AppService {
     where: NoteGetOneItemRequestDto
   ): Promise<NoteDeleteResponseDto> {
     const deletedNote = await this.appRepository.delete(where)
-    this.logger.log(`Deleted Note with ID ${deletedNote.id}`, {
+    this.logger.log(`Deleted note with ID ${deletedNote.id}`, {
       deletedNote,
     })
     return mapToDto(deletedNote)
