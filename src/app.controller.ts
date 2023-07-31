@@ -9,7 +9,15 @@ import {
 } from '@nestjs/common'
 import { AppService } from './app.service'
 import { Note as NoteModel } from '@prisma/client'
-import { NoteCreateRequestDto, NoteUpdateRequestDto } from './types/dtos/dtos'
+import {
+  NoteCreateRequestDto,
+  NoteCreateResponseDto,
+  NoteDeleteResponseDto,
+  NoteGetAllItemsResponseDto,
+  NoteGetOneItemResponseDto,
+  NoteUpdateRequestDto,
+  NoteUpdateResponseDto,
+} from './types/dtos/dtos'
 
 interface StatsResult {
   totalNotes: number
@@ -21,23 +29,27 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  async getNotes(): Promise<NoteModel[]> {
-    return this.appService.findNotes({})
+  async getNotes(): Promise<NoteGetAllItemsResponseDto[]> {
+    return this.appService.findNotes()
   }
 
   @Get(':id')
-  async getNoteById(@Param('id') id: string): Promise<NoteModel> {
+  async getNoteById(
+    @Param('id') id: string
+  ): Promise<NoteGetOneItemResponseDto> {
     return this.appService.findNote({ id: Number(id) })
   }
 
   @Post()
   async createNote(
     @Body() { name, date, content, category }: NoteCreateRequestDto
-  ): Promise<NoteModel> {
+  ): Promise<NoteCreateResponseDto> {
     const parsedDate = new Date(date.split('-').reverse().join('-'))
+    const isoDate = parsedDate.toISOString()
+    console.log(isoDate)
     return this.appService.createNote({
       name,
-      date: parsedDate,
+      date: isoDate,
       category,
       content,
     })
@@ -48,7 +60,7 @@ export class AppController {
     @Param('id') id: string,
     @Body()
     { name, date, content, category }: NoteUpdateRequestDto
-  ): Promise<NoteModel> {
+  ): Promise<NoteUpdateResponseDto> {
     return this.appService.updateNote({
       where: { id: Number(id) },
       data: { name, date, content, category },
@@ -56,13 +68,13 @@ export class AppController {
   }
 
   @Delete(':id')
-  async deletePost(@Param('id') id: string): Promise<NoteModel> {
+  async deletePost(@Param('id') id: string): Promise<NoteDeleteResponseDto> {
     return this.appService.deleteNote({ id: Number(id) })
   }
 
   @Get('stats')
   async getNotesStats(): Promise<StatsResult> {
-    const notes = await this.appService.findNotes({})
+    const notes = await this.appService.findNotes()
     const stats = this.calculateNotesStats(notes)
     return stats
   }

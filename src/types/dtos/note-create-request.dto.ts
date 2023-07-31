@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString, IsIn, Matches } from 'class-validator'
+import { IsNotEmpty, IsString, IsIn, IsDateString } from 'class-validator'
+import { Transform } from 'class-transformer'
 import { categories } from './common/categories/categories'
 
 class NoteCreateRequestDto {
@@ -7,8 +8,11 @@ class NoteCreateRequestDto {
   name: string
 
   @IsNotEmpty()
-  @Matches(/^([1-9]\d{3})-(0?[1-9]|1[0-2])-(0?[1-9]|[12]\d|3[01])$/, {
-    message: 'Invalid date format. Please use DD-MM-YYYY format.',
+  @IsDateString()
+  @Transform(({ value }) => {
+    const [day, month, year] = value.split('-').map(Number)
+    const isoDate = new Date(Date.UTC(year, month - 1, day)).toISOString()
+    return isoDate
   })
   date: string
 
