@@ -16,7 +16,7 @@ interface StatsResult {
   notesByCategory: Record<string, number>
 }
 
-@Controller('notes')
+@Controller('api/notes')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
