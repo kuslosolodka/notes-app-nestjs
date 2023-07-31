@@ -16,7 +16,8 @@
     "lint:prettify": "prettier --check \"**/*.{ts,md,json,js,mjs}\"",
     "lint:type": "npx tsc --noEmit",
     "lint:js": "npx eslint \"src/**/*.ts\"",
-    "lint:all": "npm run lint:editorconfig && npm run lint:prettify && npm run lint:type && npm run lint:js"
+    "lint:all": "npm run lint:editorconfig && npm run lint:prettify && npm run lint:type && npm run lint:js",
+    "deploy": "nest start && npx prisma generate"
   },
   "dependencies": {
     "@fastify/static": "6.10.2",
