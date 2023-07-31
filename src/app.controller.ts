@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common'
 import { AppService } from './app.service'
 import { Note as NoteModel } from '@prisma/client'
+import { NoteCreateRequestDto, NoteUpdateRequestDto } from './types/dtos/dtos'
 
 @Controller('notes')
 export class AppController {
@@ -26,18 +27,12 @@ export class AppController {
 
   @Post()
   async createNote(
-    @Body()
-    noteData: {
-      name: string
-      date: Date
-      content: string
-      category: string
-    }
+    @Body() { name, date, content, category }: NoteCreateRequestDto
   ): Promise<NoteModel> {
-    const { name, date, content, category } = noteData
+    const parsedDate = new Date(date.split('-').reverse().join('-'))
     return this.appService.createNote({
       name,
-      date,
+      date: parsedDate,
       category,
       content,
     })
@@ -47,9 +42,8 @@ export class AppController {
   async updatePost(
     @Param('id') id: string,
     @Body()
-    noteData: { name: string; date: Date; content: string; category: string }
+    { name, date, content, category }: NoteUpdateRequestDto
   ): Promise<NoteModel> {
-    const { name, date, content, category } = noteData
     return this.appService.updateNote({
       where: { id: Number(id) },
       data: { name, date, content, category },
