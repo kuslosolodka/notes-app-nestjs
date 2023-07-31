@@ -11,6 +11,11 @@ import { AppService } from './app.service'
 import { Note as NoteModel } from '@prisma/client'
 import { NoteCreateRequestDto, NoteUpdateRequestDto } from './types/dtos/dtos'
 
+interface StatsResult {
+  totalNotes: number
+  notesByCategory: Record<string, number>
+}
+
 @Controller('notes')
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -53,5 +58,27 @@ export class AppController {
   @Delete(':id')
   async deletePost(@Param('id') id: string): Promise<NoteModel> {
     return this.appService.deleteNote({ id: Number(id) })
+  }
+
+  @Get('stats')
+  async getNotesStats(): Promise<StatsResult> {
+    const notes = await this.appService.findNotes({})
+    const stats = this.calculateNotesStats(notes)
+    return stats
+  }
+
+  private calculateNotesStats(notes: NoteModel[]): StatsResult {
+    const totalNotes = notes.length
+
+    const notesByCategory: Record<string, number> = {}
+    notes.forEach((note) => {
+      const { category } = note
+      notesByCategory[category] = (notesByCategory[category] || 0) + 1
+    })
+
+    return {
+      totalNotes,
+      notesByCategory,
+    }
   }
 }
