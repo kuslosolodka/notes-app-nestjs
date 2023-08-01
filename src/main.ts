@@ -10,7 +10,8 @@ import { setupSwagger } from './libs/packages/swagger/swagger'
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter()
+    new FastifyAdapter(),
+    { cors: true }
   )
   setupSwagger(app)
   app.enableShutdownHooks()
