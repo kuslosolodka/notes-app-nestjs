@@ -1,4 +1,5 @@
-import { IsString, Matches, IsIn } from 'class-validator'
+import { IsIn, IsString, Matches } from 'class-validator'
+
 import { categories } from './common/categories/categories'
 
 class NoteUpdateRequestDto {

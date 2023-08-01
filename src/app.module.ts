@@ -1,8 +1,9 @@
 import { Logger, Module } from '@nestjs/common'
+
 import { AppController } from './app.controller'
+import { AppRepository } from './app.repository'
 import { AppService } from './app.service'
 import { PrismaService } from './prisma.service'
-import { AppRepository } from './app.repository'
 @Module({
   imports: [],
   controllers: [AppController],

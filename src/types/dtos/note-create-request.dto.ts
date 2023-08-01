@@ -1,5 +1,6 @@
-import { IsNotEmpty, IsString, IsIn, IsDateString } from 'class-validator'
 import { Transform } from 'class-transformer'
+import { IsDateString, IsIn, IsNotEmpty, IsString } from 'class-validator'
+
 import { categories } from './common/categories/categories'
 
 class NoteCreateRequestDto {
@@ -10,9 +11,8 @@ class NoteCreateRequestDto {
   @IsNotEmpty()
   @IsDateString()
   @Transform(({ value }) => {
-    const [day, month, year] = value.split('-').map(Number)
-    const isoDate = new Date(Date.UTC(year, month - 1, day)).toISOString()
-    return isoDate
+    const [day, month, year] = (value as string).split('-').map(Number)
+    return new Date(Date.UTC(year, month - 1, day)).toISOString()
   })
   date: string
 

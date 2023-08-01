@@ -1,11 +1,11 @@
+import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify'
-import { AppModule } from './app.module'
-import { ValidationPipe } from '@nestjs/common'
 
+import { AppModule } from './app.module'
 import { setupSwagger } from './libs/packages/swagger/swagger'
 
 async function bootstrap() {
@@ -19,4 +19,4 @@ async function bootstrap() {
   await app.listen(3000)
 }
 
-bootstrap()
+void bootstrap()
