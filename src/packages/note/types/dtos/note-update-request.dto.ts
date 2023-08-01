@@ -1,7 +1,7 @@
 class NoteUpdateRequestDto {
   name: string
 
-  date: string
+  date?: string
 
   content: string
 

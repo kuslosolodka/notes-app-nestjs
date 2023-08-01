@@ -71,9 +71,13 @@ export class NoteController {
     @Body(new ZodValidationPipe(NoteUpdateSchema))
     { name, date, content, category }: NoteUpdateRequestDto
   ): Promise<NoteUpdateResponseDto> {
+    const parsedDate = date
+      ? new Date(date.split('-').reverse().join('-'))
+      : undefined
+    const isoDate = parsedDate?.toISOString()
     return this.noteService.updateNote({
       where: { id: Number(id) },
-      data: { name, date, content, category },
+      data: { name, date: isoDate, content, category },
     })
   }
 
