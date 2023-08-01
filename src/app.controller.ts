@@ -1,14 +1,15 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
   Param,
-  Post,
-  Body,
   Patch,
-  Delete,
+  Post,
 } from '@nestjs/common'
-import { AppService } from './app.service'
 import { Note as NoteModel } from '@prisma/client'
+
+import { AppService } from './app.service'
 import {
   NoteCreateRequestDto,
   NoteCreateResponseDto,
@@ -75,18 +76,17 @@ export class AppController {
   @Get('stats')
   async getNotesStats(): Promise<StatsResult> {
     const notes = await this.appService.findNotes()
-    const stats = this.calculateNotesStats(notes)
-    return stats
+    return this.calculateNotesStats(notes)
   }
 
   private calculateNotesStats(notes: NoteModel[]): StatsResult {
     const totalNotes = notes.length
 
     const notesByCategory: Record<string, number> = {}
-    notes.forEach((note) => {
+    for (const note of notes) {
       const { category } = note
       notesByCategory[category] = (notesByCategory[category] || 0) + 1
-    })
+    }
 
     return {
       totalNotes,

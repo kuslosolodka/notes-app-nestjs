@@ -1,6 +1,7 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 
 import { AppRepository } from './app.repository'
+import { mapToDto } from './helpers/map-to-dto/map-to-dto.helper'
 import type {
   NoteCreateRequestDto,
   NoteCreateResponseDto,
@@ -11,7 +12,6 @@ import type {
   NoteUpdateRequestDto,
   NoteUpdateResponseDto,
 } from './types/dtos/dtos'
-import { mapToDto } from './helpers/map-to-dto/map-to-dto.helper'
 
 @Injectable()
 class AppService {
@@ -22,7 +22,7 @@ class AppService {
 
   async findNote(
     NoteWhereUniqueInput: NoteGetOneItemRequestDto
-  ): Promise<NoteGetOneItemResponseDto | null> {
+  ): Promise<NoteGetOneItemResponseDto> {
     const note = await this.appRepository.find(NoteWhereUniqueInput)
     if (note) {
       this.logger.log(`Found note with ID ${note.id}`, { note })

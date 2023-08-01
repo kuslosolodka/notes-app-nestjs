@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from './prisma.service'
 import { Note, Prisma } from '@prisma/client'
+
+import { PrismaService } from './prisma.service'
 
 @Injectable()
 export class AppRepository {
@@ -14,14 +15,14 @@ export class AppRepository {
     })
   }
 
-  async findAll(params: {
+  async findAll(parameters: {
     skip?: number
     take?: number
     cursor?: Prisma.NoteWhereUniqueInput
     where?: Prisma.NoteWhereInput
     orderBy?: Prisma.NoteOrderByWithRelationInput
   }): Promise<Note[]> {
-    const { skip, take, cursor, where, orderBy } = params
+    const { skip, take, cursor, where, orderBy } = parameters
     return this.prisma.note.findMany({
       skip,
       take,
@@ -37,11 +38,11 @@ export class AppRepository {
     })
   }
 
-  async update(params: {
+  async update(parameters: {
     where: Prisma.NoteWhereUniqueInput
     data: Prisma.NoteUpdateInput
   }): Promise<Note> {
-    const { where, data } = params
+    const { where, data } = parameters
     return this.prisma.note.update({
       data,
       where,
