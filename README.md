@@ -1,73 +1,75 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Notes App
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+App for managing your notes
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### ❤️ Backend
 
-## Description
+- Main:
+  - 🐻 [NestJS](https://nestjs.com/) - Node.js framework
+- Database:
+  - 🐘 [PostgreSQL](https://www.postgresql.org/) - Relational database
+- ORM:
+  - 🔺 [Prisma](https://www.prisma.io/) - Node.js and TypeScript ORM
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Code Quality
 
-## Installation
+- JS:
+  - 🔥 [ESLint](https://eslint.org/) - Javascript-linter
+- ESLint Rules:
 
-```bash
-$ npm install
-```
+  - 💀 [eslint:recommended](https://eslint.org/docs/latest/rules/) - Default ESLint rules
+  - 💀 [eslint-plugin-sonarjs](https://github.com/SonarSource/eslint-plugin-sonarjs) - SonarJS rules for ESLint to detect bugs and suspicious patterns in your code
+  - 🔏 Typescript:
+    - 💀 [typescript-eslint:recommended](https://typescript-eslint.io/linting/configs/#recommended) - Default Typescript rules
+    - 💀 [typescript-eslint:recommended-requiring-type-checking](https://typescript-eslint.io/linting/configs/#recommended-requiring-type-checking) - Addition Typescript rules that require type information
+    - 💀 [typescript-eslint:strict](https://typescript-eslint.io/linting/configs/#strict) - Additional Typescript rules that can also catch bugs but are more opinionated than recommended rules
+  - 🔤 Naming:
+    - 🦄 [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn) - More than 100 powerful ESLint rules (including more consistent naming patterns)
+  - 🔢 Sorting:
+    - 💀 [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import), [eslint-plugin-simple-import-sort](https://github.com/lydell/eslint-plugin-simple-import-sort) - Rules for sorting imports in code
 
-## Running the app
+- Commits:
+  - 🤝 [commitlint](https://commitlint.js.org/#/) - Commits-linter
+  - 🐶 [husky](https://typicode.github.io/husky/) - Tool for managing git hooks
+- Git staged files:
+  - 💣 [lint-staged](https://github.com/okonet/lint-staged) - Linting git staged filed
+- Code formatting:
+  - 🎀 [Prettier](https://prettier.io/) - Code formatting
 
-```bash
-# development
-$ npm run start
+## Commits
 
-# watch mode
-$ npm run start:dev
+- Rules:
+  - 🎛️ [Conventional Commits](https://www.conventionalcommits.org/uk/v1.0.0/) - specification for writing commits
 
-# production mode
-$ npm run start:prod
-```
+## Local setup
 
-## Test
+### 1. For properly working with backend you need create empty database. Choose one of two options:
 
-```bash
-# unit tests
-$ npm run test
+| First option                                                 | Second option                         |
+| ------------------------------------------------------------ | ------------------------------------- |
+| Install `Docker` on local machine                            | Install `PostgreSQL` on local machine |
+| Fill `.env` file using `.env.example` DB and PG-ADMIN fields | Create server group                   |
+| Run `docker compose up` command                              | Create server table                   |
+| Open `localhost:5050`                                        |
+| Use email and password from `.env`                           |
+| Create server group                                          |
+| Create server table                                          |
 
-# e2e tests
-$ npm run test:e2e
+### 2. After that, run this commands:
 
-# test coverage
-$ npm run test:cov
-```
+- `npm install`
+- `npx simple-git-hooks`
 
-## Support
+### 3. Fill database url field in .env using .env.example. Then, run migrate command
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- `npm run migrate:dev`
 
-## Stay in touch
+### 4. Get mock data:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- `npm run seed`
 
-## License
+### 5. Finally, start server:
 
-Nest is [MIT licensed](LICENSE).
+| Recommended         | Production           | Development     |
+| ------------------- | -------------------- | --------------- |
+| `npm run start:dev` | `npm run start:prod` | `npm run start` |
