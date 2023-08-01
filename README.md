@@ -45,15 +45,15 @@ App for managing your notes
 
 ### 1. For properly working with backend you need create empty database. Choose one of two options:
 
-| First option                                                 | Second option                         |
-| ------------------------------------------------------------ | ------------------------------------- |
-| Install `Docker` on local machine                            | Install `PostgreSQL` on local machine |
-| Fill `.env` file using `.env.example` DB and PG-ADMIN fields | Create server group                   |
-| Run `docker compose up` command                              | Create server table                   |
+| First option                                                 | Second option                              |
+| ------------------------------------------------------------ | ------------------------------------------ |
+| Install `Docker` on local machine                            | Install `PostgreSQL` on local machine      |
+| Fill `.env` file using `.env.example` DB and PG-ADMIN fields | Add server group                           |
+| Run `docker compose up` command                              | Add empty database in created server group |
 | Open `localhost:5050`                                        |
 | Use email and password from `.env`                           |
-| Create server group                                          |
-| Create server table                                          |
+| Add server group                                             |
+| Add empty database in created server group                   |
 
 ### 2. Install packages and get git hooks:
 
