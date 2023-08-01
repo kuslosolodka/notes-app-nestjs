@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common'
 import { Note as NoteModel } from '@prisma/client'
 
-import { ZodValidationPipe } from '../pipes/zod-validation.pipe'
+import { ZodValidationPipe } from '../../libs/packages/pipes/zod-validation.pipe'
 import { NoteService } from './note.service'
 import {
   NoteCreateRequestDto,
@@ -21,9 +21,9 @@ import {
   NoteUpdateRequestDto,
   NoteUpdateResponseDto,
 } from './types/dtos/dtos'
-import { NoteRouteParametersSchema } from './types/validation-schemas/note-route-parameters.validation-schema'
 import {
   NoteCreateSchema,
+  NoteRouteParametersSchema,
   NoteUpdateSchema,
 } from './types/validation-schemas/validation-schemas'
 

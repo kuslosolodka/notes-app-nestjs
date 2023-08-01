@@ -1,6 +1,6 @@
 import type { Note } from '@prisma/client'
 
-import type { NoteDto } from '../../../../types/dtos/dtos'
+import type { NoteDto } from '../../types/dtos/dtos'
 
 const mapToDto = (note: Note): NoteDto => {
   const noteDto: NoteDto = {
