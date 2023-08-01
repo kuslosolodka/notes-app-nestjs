@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import {
   FastifyAdapter,
@@ -15,7 +14,6 @@ async function bootstrap() {
   )
   setupSwagger(app)
   app.enableShutdownHooks()
-  app.useGlobalPipes(new ValidationPipe())
   await app.listen(3000)
 }
 

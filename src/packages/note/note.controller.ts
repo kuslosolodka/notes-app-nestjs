@@ -54,7 +54,7 @@ export class NoteController {
     @Body(new ZodValidationPipe(NoteCreateSchema))
     { name, date, content, category }: NoteCreateRequestDto
   ): Promise<NoteCreateResponseDto> {
-    const parsedDate = new Date(date.split('-').reverse().join('-'))
+    const parsedDate = new Date(date)
     const isoDate = parsedDate.toISOString()
     return this.noteService.createNote({
       name,
@@ -71,9 +71,7 @@ export class NoteController {
     @Body(new ZodValidationPipe(NoteUpdateSchema))
     { name, date, content, category }: NoteUpdateRequestDto
   ): Promise<NoteUpdateResponseDto> {
-    const parsedDate = date
-      ? new Date(date.split('-').reverse().join('-'))
-      : undefined
+    const parsedDate = date ? new Date(date) : undefined
     const isoDate = parsedDate?.toISOString()
     return this.noteService.updateNote({
       where: { id: Number(id) },
