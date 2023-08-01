@@ -9,16 +9,23 @@ import {
 } from '@nestjs/common'
 import { Note as NoteModel } from '@prisma/client'
 
+import { ZodValidationPipe } from '../pipes/zod-validation.pipe'
 import { NoteService } from './note.service'
 import {
   NoteCreateRequestDto,
   NoteCreateResponseDto,
   NoteDeleteResponseDto,
   NoteGetAllItemsResponseDto,
+  NoteGetOneItemRequestDto,
   NoteGetOneItemResponseDto,
   NoteUpdateRequestDto,
   NoteUpdateResponseDto,
 } from './types/dtos/dtos'
+import { NoteRouteParametersSchema } from './types/validation-schemas/note-route-parameters.validation-schema'
+import {
+  NoteCreateSchema,
+  NoteUpdateSchema,
+} from './types/validation-schemas/validation-schemas'
 
 interface StatsResult {
   totalNotes: number
@@ -36,18 +43,19 @@ export class NoteController {
 
   @Get(':id')
   async getNoteById(
-    @Param('id') id: string
+    @Param('id', new ZodValidationPipe(NoteRouteParametersSchema))
+    id: NoteGetOneItemRequestDto
   ): Promise<NoteGetOneItemResponseDto> {
     return this.noteService.findNote({ id: Number(id) })
   }
 
   @Post()
   async createNote(
-    @Body() { name, date, content, category }: NoteCreateRequestDto
+    @Body(new ZodValidationPipe(NoteCreateSchema))
+    { name, date, content, category }: NoteCreateRequestDto
   ): Promise<NoteCreateResponseDto> {
     const parsedDate = new Date(date.split('-').reverse().join('-'))
     const isoDate = parsedDate.toISOString()
-    console.log(isoDate)
     return this.noteService.createNote({
       name,
       date: isoDate,
@@ -58,8 +66,9 @@ export class NoteController {
 
   @Patch(':id')
   async updatePost(
-    @Param('id') id: string,
-    @Body()
+    @Param('id', new ZodValidationPipe(NoteRouteParametersSchema))
+    id: NoteGetOneItemRequestDto,
+    @Body(new ZodValidationPipe(NoteUpdateSchema))
     { name, date, content, category }: NoteUpdateRequestDto
   ): Promise<NoteUpdateResponseDto> {
     return this.noteService.updateNote({
@@ -69,7 +78,10 @@ export class NoteController {
   }
 
   @Delete(':id')
-  async deletePost(@Param('id') id: string): Promise<NoteDeleteResponseDto> {
+  async deletePost(
+    @Param('id', new ZodValidationPipe(NoteRouteParametersSchema))
+    id: NoteGetOneItemRequestDto
+  ): Promise<NoteDeleteResponseDto> {
     return this.noteService.deleteNote({ id: Number(id) })
   }
 
