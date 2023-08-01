@@ -43,33 +43,33 @@ App for managing your notes
 
 ## Local setup
 
-For properly working with backend you need create empty database. Choose one of two options:
+### 1. For properly working with backend you need create empty database. Choose one of two options:
 
-### First option:
+| First option                                                 | Second option                         |
+| ------------------------------------------------------------ | ------------------------------------- |
+| Install `Docker` on local machine                            | Install `PostgreSQL` on local machine |
+| Fill `.env` file using `.env.example` DB and PG-ADMIN fields | Create server group                   |
+| Run `docker compose up` command                              | Create server table                   |
+| Open `localhost:5050`                                        |
+| Use email and password from `.env`                           |
+| Create server group                                          |
+| Create server table                                          |
 
-- Install Docker on local machine
-- Fill .env file using .env.example DB and PG-ADMIN fields
-- Run docker compose up command
-- Open localhost:5050, use email and password from .env, create server group and table
+### 2. After that, run this commands:
 
-### Second option:
+- `npm install`
+- `npx simple-git-hooks`
 
-- Install PostgreSQL on local machine
-- Create server group and table
+### 3. Fill database url field in .env using .env.example. Then, run migrate command
 
-### Then:
+- `npm run migrate:dev`
 
-- npm install
-- npx simple-git-hooks
+### 4. Get mock data:
 
-### Fill database url field in .env using .env.example. Then, run migrate command
+- `npm run seed`
 
-- npm run migrate:dev
+### 5. Finally, start server:
 
-### Get mock data:
-
-- npm run seed
-
-### Finally, start server:
-
-- npm run start:dev
+| Recommended         | Production           | Development     |
+| ------------------- | -------------------- | --------------- |
+| `npm run start:dev` | `npm run start:prod` | `npm run start` |
