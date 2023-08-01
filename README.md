@@ -55,12 +55,14 @@ App for managing your notes
 | Create server group                                          |
 | Create server table                                          |
 
-### 2. After that, run this commands:
+### 2. Install packages and get git hooks:
 
 - `npm install`
 - `npx simple-git-hooks`
 
-### 3. Fill database url field in .env using .env.example. Then, run migrate command
+### 3. Fill `database url` field in `.env` using `.env.example`.
+
+### 4. Create migration
 
 - `npm run migrate:dev`
 
