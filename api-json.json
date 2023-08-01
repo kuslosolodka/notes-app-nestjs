@@ -1,0 +1,280 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/notes": {
+      "get": {
+        "operationId": "getNotes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NoteGetAllItemsResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createNote",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/NoteCreateRequestDto" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteCreateResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notes/{id}": {
+      "get": {
+        "operationId": "getNoteById",
+        "parameters": [
+          {
+            "required": true,
+            "name": "id",
+            "in": "query",
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteGetOneItemResponseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updatePost",
+        "parameters": [
+          {
+            "required": true,
+            "name": "id",
+            "in": "query",
+            "schema": { "type": "number" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/NoteUpdateRequestDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteUpdateResponseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deletePost",
+        "parameters": [
+          {
+            "required": true,
+            "name": "id",
+            "in": "query",
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteDeleteResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notes/stats": {
+      "get": {
+        "operationId": "getNotesStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "type": "object" } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Notes app",
+    "description": "The notes app API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "NoteGetAllItemsResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "number" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "name": { "type": "string" },
+          "date": { "format": "date-time", "type": "string" },
+          "content": { "type": "string" },
+          "category": { "type": "string" }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "date",
+          "content",
+          "category"
+        ]
+      },
+      "NoteGetOneItemResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "number" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "name": { "type": "string" },
+          "date": { "format": "date-time", "type": "string" },
+          "content": { "type": "string" },
+          "category": { "type": "string" }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "date",
+          "content",
+          "category"
+        ]
+      },
+      "NoteCreateRequestDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "date": { "type": "string" },
+          "content": { "type": "string" },
+          "category": { "type": "string" }
+        },
+        "required": ["name", "date", "content", "category"]
+      },
+      "NoteCreateResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "number" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "name": { "type": "string" },
+          "date": { "format": "date-time", "type": "string" },
+          "content": { "type": "string" },
+          "category": { "type": "string" }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "date",
+          "content",
+          "category"
+        ]
+      },
+      "NoteUpdateRequestDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "date": { "type": "string" },
+          "content": { "type": "string" },
+          "category": { "type": "string" }
+        },
+        "required": ["name", "content", "category"]
+      },
+      "NoteUpdateResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "number" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "name": { "type": "string" },
+          "date": { "format": "date-time", "type": "string" },
+          "content": { "type": "string" },
+          "category": { "type": "string" }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "date",
+          "content",
+          "category"
+        ]
+      },
+      "NoteDeleteResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "number" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "name": { "type": "string" },
+          "date": { "format": "date-time", "type": "string" },
+          "content": { "type": "string" },
+          "category": { "type": "string" }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "date",
+          "content",
+          "category"
+        ]
+      }
+    }
+  }
+}
