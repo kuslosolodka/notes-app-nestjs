@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common'
 import { Note as NoteModel } from '@prisma/client'
 
-import { AppService } from './app.service'
+import { NoteService } from './note.service'
 import {
   NoteCreateRequestDto,
   NoteCreateResponseDto,
@@ -26,19 +26,19 @@ interface StatsResult {
 }
 
 @Controller('api/notes')
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+export class NoteController {
+  constructor(private readonly noteService: NoteService) {}
 
   @Get()
   async getNotes(): Promise<NoteGetAllItemsResponseDto[]> {
-    return this.appService.findNotes()
+    return this.noteService.findNotes()
   }
 
   @Get(':id')
   async getNoteById(
     @Param('id') id: string
   ): Promise<NoteGetOneItemResponseDto> {
-    return this.appService.findNote({ id: Number(id) })
+    return this.noteService.findNote({ id: Number(id) })
   }
 
   @Post()
@@ -48,7 +48,7 @@ export class AppController {
     const parsedDate = new Date(date.split('-').reverse().join('-'))
     const isoDate = parsedDate.toISOString()
     console.log(isoDate)
-    return this.appService.createNote({
+    return this.noteService.createNote({
       name,
       date: isoDate,
       category,
@@ -62,7 +62,7 @@ export class AppController {
     @Body()
     { name, date, content, category }: NoteUpdateRequestDto
   ): Promise<NoteUpdateResponseDto> {
-    return this.appService.updateNote({
+    return this.noteService.updateNote({
       where: { id: Number(id) },
       data: { name, date, content, category },
     })
@@ -70,12 +70,12 @@ export class AppController {
 
   @Delete(':id')
   async deletePost(@Param('id') id: string): Promise<NoteDeleteResponseDto> {
-    return this.appService.deleteNote({ id: Number(id) })
+    return this.noteService.deleteNote({ id: Number(id) })
   }
 
   @Get('stats')
   async getNotesStats(): Promise<StatsResult> {
-    const notes = await this.appService.findNotes()
+    const notes = await this.noteService.findNotes()
     return this.calculateNotesStats(notes)
   }
 
