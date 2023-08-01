@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
 const NoteRouteParametersSchema = z.preprocess(
-  (value) => Number.parseInt(z.string().parse(value), 10),
-  z.number().positive().max(100)
+  Number,
+  z.number({ invalid_type_error: 'Invalid value, please, provide number' })
 )
 
 export { NoteRouteParametersSchema }
