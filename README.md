@@ -75,3 +75,10 @@ App for managing your notes
 | Recommended         | Production           | Development     |
 | ------------------- | -------------------- | --------------- |
 | `npm run start:dev` | `npm run start:prod` | `npm run start` |
+
+## Dockerizing:
+
+| First option                            | Second option       |
+| --------------------------------------- | ------------------- |
+| `docker build -t notes-app-nestjs .`    | `docker compose up` |
+| `docker run -p80:3000 notes-app-nestjs` |                     |
