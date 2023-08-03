@@ -82,3 +82,7 @@ App for managing your notes
 | --------------------------------------- | ------------------- |
 | `docker build -t notes-app-nestjs .`    | `docker compose up` |
 | `docker run -p80:3000 notes-app-nestjs` |                     |
+
+### Something goes wrong? Rebuild after making changes:
+
+` docker compose up --build`
