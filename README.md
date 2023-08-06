@@ -48,29 +48,15 @@ App for managing your notes
 | First option                                                 | Second option                              |
 | ------------------------------------------------------------ | ------------------------------------------ |
 | Install `Docker` on local machine                            | Install `PostgreSQL` on local machine      |
-| Fill `.env` file using `.env.example` DB and PG-ADMIN fields | Add server group                           |
+| Fill `.env` file using `.env.example`                        | Add server group                           |
 | Run `docker compose up` command                              | Add empty database in created server group |
-| Open `localhost:5050`                                        |
-| Use email and password from `.env`                           |
-| Add server group                                             |
-| Add empty database in created server group                   |
 
 ### 2. Install packages and get git hooks:
 
 - `npm install`
 - `npx simple-git-hooks`
 
-### 3. Fill `database url` field in `.env` using `.env.example`.
-
-### 4. Create migration
-
-- `npm run migrate:dev`
-
-### 4. Get mock data:
-
-- `npm run seed`
-
-### 5. Finally, start server:
+### 5. Finally, start server (you can skip this step, if using Docker):
 
 | Recommended         | Production           | Development     |
 | ------------------- | -------------------- | --------------- |
